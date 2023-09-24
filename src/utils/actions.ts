@@ -1,15 +1,10 @@
 'use server'
 
-import { eq } from 'drizzle-orm' 
 import { z } from "zod";
 import { zact } from "zact/server";
 import { db, sql } from "@/db/drizzle";
 import { categoriesTable, recordsTable, storesTable } from "@/db/schema";
 import { revalidatePath } from "next/cache";
-import { retrieveIdFromStores } from "./func";
-import { neon } from '@neondatabase/serverless';
-
-import { Pool, neonConfig } from '@neondatabase/serverless';
 
 export async function addCategory(data: FormData) {
   const aa = data.get("newCategory")
