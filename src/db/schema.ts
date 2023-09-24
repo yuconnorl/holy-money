@@ -22,5 +22,6 @@ export const recordsTable = pgTable("records", {
   categoryId: text("category_id").references(() => categoriesTable.id),
   memberId: text("member_id").references(() => membersTable.id),
   memo: varchar("memo", { length: 80 }),
+  recordDate: varchar("record_date", { length: 20 }),
   createdAt: timestamp("created_at").defaultNow(),
 });

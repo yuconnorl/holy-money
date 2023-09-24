@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -23,6 +24,8 @@ import NewCategory from "@/components/Category";
 import { addRecord } from "@/utils/actions";
 import DataTable from "@/components/Table";
 
+import FormComponent from "@/components/Form";
+
 export default async function Record() {
   const categories = await getCategory();
 
@@ -37,7 +40,7 @@ export default async function Record() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form action={addRecord} id="record-form">
+            {/* <form action={addRecord} id="record-form">
               <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="amount">Amount</Label>
@@ -73,7 +76,11 @@ export default async function Record() {
                   />
                 </div>
               </div>
-            </form>
+            </form> */}
+            <FormComponent
+              action={addRecord}
+              categories={categories}
+            ></FormComponent>
           </CardContent>
           <CardFooter className="flex justify-between">
             <Button variant="outline">Cancel</Button>

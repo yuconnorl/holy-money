@@ -12,7 +12,7 @@ export type Record = {
   storeId: number;
   categoryId: number;
   memo: string;
-  createdAt: Date;
+  recordDate: Date;
 };
 
 const columns: ColumnDef<Record>[] = [
@@ -56,14 +56,14 @@ const columns: ColumnDef<Record>[] = [
     header: "Memo",
   },
   {
-    accessorKey: "createdAt",
+    accessorKey: "recordDate",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          CreatedAt
+          Date
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );

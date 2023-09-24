@@ -10,13 +10,23 @@ export async function getRecord() {
   return await db.select().from(recordsTable);
 }
 
+export async function retrieveIdFromStores(storeName) {
+  const result = await db.select({
+    storeId: storesTable.id
+  })
+  .from(storesTable)
+  .where(eq(storesTable.storeName, storeName))
+
+  return result
+}
+
 export async function joinTables() {
 
   const result = await db.select({
     id: recordsTable.id,
     amount:  recordsTable.amount,
     memo: recordsTable.memo,
-    createdAt: recordsTable.createdAt,
+    recordDate: recordsTable.recordDate,
     storeName: storesTable.storeName,
     categoryName: categoriesTable.categoryName,
     memberName: membersTable.memberName
