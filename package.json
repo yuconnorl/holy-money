@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@types/ws": "^8.5.5",
-    "drizzle-kit": "0.19.2-0fc6b10"
+    "drizzle-kit": "0.19.13",
+    "eslint-plugin-simple-import-sort": "^10.0.0"
   }
 }

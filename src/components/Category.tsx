@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,8 +10,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { inputIDs, inputNames } from "@/configs/inputs";
 import { addCategory } from "@/utils/actions";
-import { Badge } from "@/components/ui/badge";
 import { getCategory } from "@/utils/func";
 
 export default async function NewCategory() {
@@ -28,8 +29,8 @@ export default async function NewCategory() {
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="amount">Input</Label>
               <Input
-                name="newCategory"
-                id="new-category"
+                name={inputNames.newCategory}
+                id={inputIDs.newCategory}
                 placeholder="new category"
               />
             </div>
