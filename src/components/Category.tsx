@@ -27,7 +27,7 @@ export default async function NewCategory() {
         <form action={addCategory} id="category-form">
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="amount">Input</Label>
+              <Label htmlFor={inputIDs.newCategory}>Input</Label>
               <Input
                 name={inputNames.newCategory}
                 id={inputIDs.newCategory}

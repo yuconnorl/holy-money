@@ -1,53 +1,44 @@
 'use server'
 
-import { z } from "zod";
-import { zact } from "zact/server";
-import { db, sql } from "@/db/drizzle";
-import { categoriesTable, recordsTable, storesTable } from "@/db/schema";
 import { revalidatePath } from "next/cache";
 
-export async function addCategory(data: FormData) {
-  const aa = data.get("newCategory")
+import { db, sql } from "@/db/drizzle";
+import { categoriesTable, recordsTable, storesTable } from "@/db/schema";
 
-  const newCategory = {
-    categoryName: aa
-  }
-  const insert = await db.insert(categoriesTable).values(newCategory);
+export async function addCategory(data: FormData) {
+  const category = data.get("new-category")
+
+  const insert = await db.insert(categoriesTable).values({
+    categoryName: category
+  });
   revalidatePath('/record')
 
   return insert
 }
 
-
-export async function addRecord(data: FormData) {
-  
-  const amount = data.get("amount")
-  const storeName = data.get("store")
-  const categoryId = data.get("category")
-  const memberId = data.get("newCategory")
-  const recordDate = data.get("recordDate")
-  const memo = data.get("memo")
+export async function addNewRecord({
+  amount, category, recordDate, store, memo
+}) {
 
   const [_, newId] = await sql.transaction([
-    sql`INSERT INTO stores (store_name) VALUES (${storeName}) ON CONFLICT (store_name) DO NOTHING`,
-    sql`SELECT id FROM stores WHERE store_name = ${storeName}`,
+    sql`INSERT INTO stores (store_name) VALUES (${store}) ON CONFLICT (store_name) DO NOTHING`,
+    sql`SELECT id FROM stores WHERE store_name = ${store}`,
   ]);
   
   const newRecord = {
     amount,
-    categoryId,
+    categoryId: category,
     recordDate,
     memo,
     storeId: newId[0].id,
     memberId: 1,
   }
 
-console.log(newRecord);
-
+  // console.log(newRecord);
   
-  const insert = await db.insert(recordsTable).values(newRecord);
-
-  revalidatePath('/record')
+  return newRecord
+  // const insert = await db.insert(recordsTable).values(newRecord);
+  // revalidatePath('/record')
 
   return 
 }
