@@ -1,5 +1,6 @@
 import "./globals.css";
 
+import clsx from "clsx";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -18,9 +19,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.className}>
-      <body className="w-full antialiased">
-        <div className="main flex w-full flex-col justify-between">
+    <html lang="en" className={clsx(inter.className, "w-full h-full")}>
+      <body className="w-full h-full antialiased relative">
+        <div className="main flex w-full h-full flex-col justify-between">
           <main className="relative flex w-full flex-[1_0_0] justify-center px-6">
             {children}
           </main>

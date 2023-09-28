@@ -4,7 +4,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { joinTables } from "@/utils/func";
 import { toLocalStringEn } from "@/utils/math";
 
-const ListCard = ({ amount, storeName, categoryName, recordDate }) => {
+interface Props {
+  amount: string;
+  storeName: string;
+  categoryName: string;
+  recordDate: string;
+}
+
+const ListCard = ({ amount, storeName, categoryName, recordDate }: Props) => {
   return (
     <div className="flex items-center">
       <Avatar className="h-9 w-9">
@@ -27,8 +34,6 @@ const ListCard = ({ amount, storeName, categoryName, recordDate }) => {
 
 export default async function ListCardTable() {
   const joinedRecord = await joinTables();
-
-  console.log(joinedRecord);
 
   return (
     <div className="flex flex-col gap-6">
