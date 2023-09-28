@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className}>
-      <body className="w-full antialiased bg-slate-50">
+      <body className="w-full antialiased">
         <div className="main flex w-full flex-col justify-between">
           <main className="relative flex w-full flex-[1_0_0] justify-center px-6">
             {children}

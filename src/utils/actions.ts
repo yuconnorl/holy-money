@@ -26,7 +26,7 @@ export async function addNewRecord({
   ]);
   
   const newRecord = {
-    amount,
+    amount: parseInt(amount),
     categoryId: category,
     recordDate,
     memo,
@@ -34,11 +34,8 @@ export async function addNewRecord({
     memberId: 1,
   }
 
-  // console.log(newRecord);
-  
-  return newRecord
-  // const insert = await db.insert(recordsTable).values(newRecord);
-  // revalidatePath('/record')
+  const insert = await db.insert(recordsTable).values(newRecord);
+  revalidatePath('/record')
 
-  return 
+  return insert
 }

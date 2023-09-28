@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import dayjs from "dayjs";
+import { Loader2 } from "lucide-react";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -12,7 +13,6 @@ import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -187,7 +187,10 @@ const RecordForm = ({ categories }) => {
               );
             }}
           />
-          <Button type="submit">Submit</Button>
+          <Button disabled={isPending} type="submit">
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Submit
+          </Button>
         </form>
       </Form>
     </>
