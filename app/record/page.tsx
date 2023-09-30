@@ -20,14 +20,24 @@ export default async function Record() {
   const rawData = await getRecord().then((d) => {
     const result = {};
     d.forEach(({ recordDate, amount }) => {
-      if (!result[recordDate]) {
-        result[recordDate] = parseInt(amount);
-      } else {
-        result[recordDate] += parseInt(amount);
-      }
+      const parsedAmount = parseFloat(amount);
+      result[recordDate] = result[recordDate] || { sum: 0, count: 0 };
+      result[recordDate].sum += parsedAmount;
+      result[recordDate].count++;
     });
 
-    return result;
+    let cumulativeSum = 0;
+
+    return Object.entries(result)
+      .map(([name, { sum, count }]) => {
+        cumulativeSum += sum;
+        return {
+          name,
+          amount: sum,
+          average: cumulativeSum / count,
+        };
+      })
+      .sort((a, b) => new Date(a.name) - new Date(b.name));
   });
 
   return (
