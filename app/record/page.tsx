@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 import NewCategory from "@/components/Category";
 import ChartComponent from "@/components/ChartComponent";
 import ListCardTable from "@/components/ListCardTable";
@@ -19,25 +21,37 @@ export default async function Record() {
   const totalBalance = await getRecord().then((d) => reduceTotalAmount(d));
   const rawData = await getRecord().then((d) => {
     const result = {};
-    d.forEach(({ recordDate, amount }) => {
-      const parsedAmount = parseFloat(amount);
-      result[recordDate] = result[recordDate] || { sum: 0, count: 0 };
-      result[recordDate].sum += parsedAmount;
-      result[recordDate].count++;
+
+    d.sort((a, b) => new Date(a.recordDate) - new Date(b.recordDate)).forEach(
+      ({ recordDate, amount }) => {
+        const parsedAmount = parseFloat(amount);
+        result[recordDate] = result[recordDate] || { sum: 0, accu: 0 };
+        result[recordDate].sum += parsedAmount;
+      }
+    );
+
+    let accumulator = 0;
+    let currentMonth = undefined;
+
+    return Object.entries(result).map(([name, { sum, accu }]) => {
+      const parsedDate = dayjs(name, { format: "MMM-DD-YYYY" });
+      const numberOfDaysInMonth = parsedDate.daysInMonth();
+
+      if (currentMonth === undefined) currentMonth = parsedDate.month();
+      if (currentMonth !== parsedDate.month()) {
+        currentMonth = parsedDate.month();
+        accumulator = sum;
+      } else {
+        accumulator += sum;
+      }
+
+      return {
+        name,
+        amount: sum,
+        accu: accumulator,
+        average: Math.round(accumulator / numberOfDaysInMonth),
+      };
     });
-
-    let cumulativeSum = 0;
-
-    return Object.entries(result)
-      .map(([name, { sum, count }]) => {
-        cumulativeSum += sum;
-        return {
-          name,
-          amount: sum,
-          average: cumulativeSum / count,
-        };
-      })
-      .sort((a, b) => new Date(a.name) - new Date(b.name));
   });
 
   return (

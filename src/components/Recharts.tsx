@@ -17,7 +17,7 @@ import { toLocalStringEn } from "@/utils/math";
 const CustomizedTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="  bg-background px-4 py-3 border rounded-lg flex gap-4">
+      <div className="bg-background px-4 py-3 border rounded-lg flex gap-4">
         {payload.map((item) => {
           const dataKey = item.dataKey;
           return (
@@ -35,6 +35,8 @@ const CustomizedTooltip = ({ active, payload, label }) => {
 };
 
 export default function RechartComponent({ data }) {
+  console.log(data);
+
   const xAxisOptions = {
     dataKey: ({ name }) => dayjs(name).format("MMM DD"),
     padding: { left: 50, right: 50 },
@@ -66,6 +68,13 @@ export default function RechartComponent({ data }) {
         <YAxis {...yAxisOptions} />
         <XAxis {...xAxisOptions} />
         <Line {...lineOptions} />
+        <Line
+          type="monotone"
+          dataKey="average"
+          stroke="#C5C5C6"
+          strokeWidth={2}
+          activeDot={{ r: 4 }}
+        />
       </LineChart>
     </ResponsiveContainer>
   );
