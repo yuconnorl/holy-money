@@ -16,9 +16,17 @@ export async function addCategory(data: FormData) {
   return insert
 }
 
+interface NewRecord {
+  amount: string
+  category: string
+  recordDate: string
+  store: string
+  memo: string
+}
+
 export async function addNewRecord({
   amount, category, recordDate, store, memo
-}) {
+}: NewRecord) {
 
   const [_, newId] = await sql.transaction([
     sql`INSERT INTO stores (store_name) VALUES (${store}) ON CONFLICT (store_name) DO NOTHING`,

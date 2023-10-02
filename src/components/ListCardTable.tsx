@@ -26,7 +26,7 @@ const ListCard = ({ amount, storeName, categoryName, recordDate }: Props) => {
         <p className="text-sm font-medium text-muted-foreground leading-none">
           {dayjs(recordDate).format("MMM-DD")}
         </p>
-        <p className="text-sm">{`$${toLocalStringEn(parseInt(amount))}`}</p>
+        <p className="text-sm">{`$${toLocalStringEn(amount)}`}</p>
       </div>
     </div>
   );

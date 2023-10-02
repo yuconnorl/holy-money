@@ -22,9 +22,7 @@ export default function RootLayout({
     <html lang="en" className={clsx(inter.className, "w-full h-full")}>
       <body className="w-full h-full antialiased relative">
         <div className="main flex w-full h-full flex-col justify-between">
-          <main className="relative flex w-full flex-[1_0_0] justify-center px-6">
-            {children}
-          </main>
+          {children}
           <Toaster />
         </div>
       </body>

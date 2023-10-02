@@ -1,10 +1,9 @@
-import { addCategory } from "@/utils/actions";
-import { revalidatePath } from "next/cache";
+import Dashboard from "./dashboard";
 
 export default function Home() {
   return (
-    <main className="p-24">
-      <div>test</div>
+    <main className="p-12 container">
+      <Dashboard />
     </main>
   );
 }

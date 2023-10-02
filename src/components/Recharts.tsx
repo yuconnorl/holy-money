@@ -35,8 +35,6 @@ const CustomizedTooltip = ({ active, payload, label }) => {
 };
 
 export default function RechartComponent({ data }) {
-  console.log(data);
-
   const xAxisOptions = {
     dataKey: ({ name }) => dayjs(name).format("MMM DD"),
     padding: { left: 50, right: 50 },

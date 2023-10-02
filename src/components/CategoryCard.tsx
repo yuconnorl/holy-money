@@ -9,16 +9,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { inputIDs, inputNames } from "@/configs/inputs";
 import { addCategory } from "@/utils/actions";
 import { getCategory } from "@/utils/func";
 
-export default async function NewCategory() {
+export default async function NewCategoryCard() {
   const categories = await getCategory();
 
   return (
-    <Card className="w-[350px]">
+    <Card className="h-max">
       <CardHeader>
         <CardTitle>Adding new category</CardTitle>
         <CardDescription>Deploy your new project in one-click.</CardDescription>
@@ -26,12 +25,11 @@ export default async function NewCategory() {
       <CardContent>
         <form action={addCategory} id="category-form">
           <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor={inputIDs.newCategory}>Input</Label>
+            <div className="py-2">
               <Input
                 name={inputNames.newCategory}
                 id={inputIDs.newCategory}
-                placeholder="new category"
+                placeholder="Name of new category"
               />
             </div>
             <div className="flex gap-2 flex-wrap">

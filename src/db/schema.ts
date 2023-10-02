@@ -16,12 +16,12 @@ export const storesTable = pgTable("stores", {
 });
 
 export const recordsTable = pgTable("records", {
-  id: serial("id").primaryKey(), 
-  amount: numeric("amount", { precision: 15, scale: 4 }),
-  storeId: text("store_id").references(() => storesTable.id),
-  categoryId: text("category_id").references(() => categoriesTable.id),
-  memberId: text("member_id").references(() => membersTable.id),
-  memo: varchar("memo", { length: 80 }),
-  recordDate: varchar("record_date", { length: 20 }),
-  createdAt: timestamp("created_at").defaultNow(),
+  id: serial("id").primaryKey().notNull(), 
+  amount: numeric("amount", { precision: 15, scale: 4 }).notNull(),
+  storeId: text("store_id").references(() => storesTable.id).notNull(),
+  categoryId: text("category_id").references(() => categoriesTable.id).notNull(),
+  memberId: text("member_id").references(() => membersTable.id).notNull(),
+  memo: varchar("memo", { length: 80 }).notNull(),
+  recordDate: varchar("record_date", { length: 20 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });

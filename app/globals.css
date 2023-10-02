@@ -73,4 +73,8 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .container {
+    @apply max-w-[1500px]
+  }
 }

@@ -83,8 +83,6 @@ const columns: ColumnDef<Record>[] = [
     cell: ({ row }) => {
       const payment = row.original;
 
-      console.log(payment);
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

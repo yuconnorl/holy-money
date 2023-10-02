@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 
-import NewCategory from "@/components/Category";
-import ChartComponent from "@/components/ChartComponent";
+import NewCategory from "@/components/CategoryCard";
 import ListCardTable from "@/components/ListCardTable";
 import RechartComponent from "@/components/Recharts";
 import RecordForm from "@/components/RecordForm";
@@ -16,24 +15,28 @@ import {
 import { getCategory, getRecord } from "@/utils/func";
 import { reduceTotalAmount } from "@/utils/math";
 
+interface ModifiedRecord {
+  [date: string]: number;
+}
+
 export default async function Record() {
   const categories = await getCategory();
   const totalBalance = await getRecord().then((d) => reduceTotalAmount(d));
   const rawData = await getRecord().then((d) => {
-    const result = {};
+    const result: ModifiedRecord = {};
 
-    d.sort((a, b) => new Date(a.recordDate) - new Date(b.recordDate)).forEach(
-      ({ recordDate, amount }) => {
-        const parsedAmount = parseFloat(amount);
-        result[recordDate] = result[recordDate] || { sum: 0, accu: 0 };
-        result[recordDate].sum += parsedAmount;
-      }
-    );
+    d.sort((a, b) =>
+      new Date(a.recordDate) > new Date(b.recordDate) ? 1 : -1
+    ).forEach(({ recordDate, amount }) => {
+      const parsedAmount = parseFloat(amount);
+      result[recordDate] = result[recordDate] || 0;
+      result[recordDate] += parsedAmount;
+    });
 
     let accumulator = 0;
-    let currentMonth = undefined;
+    let currentMonth: undefined | number = undefined;
 
-    return Object.entries(result).map(([name, { sum, accu }]) => {
+    return Object.entries(result).map(([name, sum]) => {
       const parsedDate = dayjs(name, { format: "MMM-DD-YYYY" });
       const numberOfDaysInMonth = parsedDate.daysInMonth();
 
@@ -100,7 +103,6 @@ export default async function Record() {
           </CardContent>
         </Card>
       </div>
-      {/* <ChartComponent /> */}
       <Card className="relative">
         <CardHeader>
           <CardTitle>Record Form</CardTitle>

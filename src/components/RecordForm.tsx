@@ -76,7 +76,7 @@ const RecordForm = ({ categories }) => {
   return (
     <>
       <Form {...rhfMethods}>
-        <form action={handleFormSubmit} className="space-y-8">
+        <form action={handleFormSubmit} className="space-y-4">
           <FormField
             control={rhfMethods.control}
             name="amount"
