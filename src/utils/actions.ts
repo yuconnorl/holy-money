@@ -11,7 +11,7 @@ export async function addCategory(data: FormData) {
   const insert = await db.insert(categoriesTable).values({
     categoryName: category
   });
-  revalidatePath('/record')
+  revalidatePath('/')
 
   return insert
 }
@@ -43,7 +43,7 @@ export async function addNewRecord({
   }
 
   const insert = await db.insert(recordsTable).values(newRecord);
-  revalidatePath('/record')
+  revalidatePath('/')
 
   return insert
 }

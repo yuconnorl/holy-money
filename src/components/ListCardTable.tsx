@@ -1,6 +1,14 @@
 import dayjs from "dayjs";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { joinTables } from "@/utils/func";
 import { toLocalStringEn } from "@/utils/math";
 
@@ -26,7 +34,7 @@ const ListCard = ({ amount, storeName, categoryName, recordDate }: Props) => {
         <p className="text-sm font-medium text-muted-foreground leading-none">
           {dayjs(recordDate).format("MMM-DD")}
         </p>
-        <p className="text-sm">{`$${toLocalStringEn(amount)}`}</p>
+        <p className="text-base">{`$${toLocalStringEn(amount)}`}</p>
       </div>
     </div>
   );
@@ -36,20 +44,28 @@ export default async function ListCardTable() {
   const joinedRecord = await joinTables();
 
   return (
-    <div className="flex flex-col gap-6">
-      {joinedRecord.map(
-        ({ id, amount, recordDate, storeName, categoryName }) => {
-          return (
-            <ListCard
-              key={id}
-              amount={amount}
-              storeName={storeName}
-              categoryName={categoryName}
-              recordDate={recordDate}
-            />
-          );
-        }
-      )}
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Recent Sales</CardTitle>
+        <CardDescription>You made 265 sales this month.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="flex flex-col gap-6">
+          {joinedRecord.map(
+            ({ id, amount, recordDate, storeName, categoryName }) => {
+              return (
+                <ListCard
+                  key={id}
+                  amount={amount}
+                  storeName={storeName}
+                  categoryName={categoryName}
+                  recordDate={recordDate}
+                />
+              );
+            }
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 }

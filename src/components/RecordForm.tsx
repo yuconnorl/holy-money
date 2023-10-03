@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import dayjs from "dayjs";
 import { Loader2 } from "lucide-react";
@@ -10,6 +11,13 @@ import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
 import {
   Form,
   FormControl,
@@ -24,13 +32,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { addNewRecord } from "@/utils/actions";
@@ -53,8 +54,18 @@ const formSchema = z.object({
   memo: z.string().max(100).optional(),
 });
 
-const RecordForm = ({ categories }) => {
+interface Category {
+  id: number;
+  categoryName: string;
+}
+
+interface Props {
+  categories: Array<Category>;
+}
+
+const RecordForm = ({ categories }: Props) => {
   const [isPending, startTransition] = useTransition();
+
   const rhfMethods = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -134,25 +145,63 @@ const RecordForm = ({ categories }) => {
             control={rhfMethods.control}
             name="category"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex flex-col">
                 <FormLabel>Category</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent position="popper">
-                    {categories.map(({ id, categoryName }) => (
-                      <SelectItem key={id} value={`${id}`}>
-                        {categoryName}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className={cn(
+                          "w-[200px] justify-between",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value
+                          ? categories.find((category) => {
+                              return `${category.id}` === field.value;
+                            })?.categoryName
+                          : "Select category"}
+                        <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[200px] p-0">
+                    <Command>
+                      <CommandInput
+                        placeholder="Search framework..."
+                        className="h-9"
+                      />
+                      <CommandEmpty>No category found.</CommandEmpty>
+                      <CommandGroup>
+                        {categories.map(({ id, categoryName }) => {
+                          const stringifyId = id.toString();
+
+                          return (
+                            <CommandItem
+                              value={categoryName}
+                              key={id}
+                              onSelect={() => {
+                                rhfMethods.setValue("category", stringifyId);
+                              }}
+                            >
+                              {categoryName}
+                              <CheckIcon
+                                className={cn(
+                                  "ml-auto h-4 w-4",
+                                  stringifyId === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                            </CommandItem>
+                          );
+                        })}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
                 <FormMessage />
               </FormItem>
             )}

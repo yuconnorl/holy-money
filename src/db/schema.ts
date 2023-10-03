@@ -1,13 +1,13 @@
 import { numeric, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 export const categoriesTable = pgTable("categories", {
-  id: serial("id").primaryKey(),
-  categoryName: varchar("category_name", { length: 80 }).unique(),
+  id: serial("id").primaryKey().notNull(),
+  categoryName: varchar("category_name", { length: 80 }).unique().notNull(),
 });
 
 export const membersTable = pgTable("members", {
-  id: serial("id").primaryKey(),
-  memberName: varchar("member_name", { length: 80 }).unique(),
+  id: serial("id").primaryKey().notNull(),
+  memberName: varchar("member_name", { length: 80 }).unique().notNull(),
 });
 
 export const storesTable = pgTable("stores", {

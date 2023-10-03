@@ -8,7 +8,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getCategory } from "@/utils/func";
-import { reduceTotalAmount } from "@/utils/math";
 
 export default async function RecordCard() {
   const categories = await getCategory();
