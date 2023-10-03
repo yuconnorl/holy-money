@@ -1,4 +1,5 @@
-import { eq } from "drizzle-orm";
+import dayjs from 'dayjs'
+import { eq, inArray } from "drizzle-orm";
 
 import { db } from "@/db/drizzle";
 import { categoriesTable, membersTable,recordsTable, storesTable } from "@/db/schema";
@@ -8,9 +9,26 @@ export async function getCategory() {
   return await db.select().from(categoriesTable);
 }
 
-// get all records from recordsTable
-export async function getRecord() {
-  return await db.select().from(recordsTable);
+// get records from last seven days
+export async function getMonthlyRecord(isRetrievePrevious = false) {
+  const currentMonth = dayjs().get('month')
+  const previousMonth = dayjs().get('month') - 1
+
+  const currentMonthData = await db.select().from(recordsTable).where(eq(recordsTable.recordMonth, currentMonth));
+  const previousMonthData = isRetrievePrevious ? await db.select().from(recordsTable).where(eq(recordsTable.recordMonth, previousMonth)) : undefined
+
+  return {currentMonthData, previousMonthData}
+}
+
+// get records from last seven days
+export async function getPastSevenDaysRecord() {
+  const dateArray = [];
+
+  for (let i = 0; i > -7; i--) {
+    dateArray.push(dayjs().add(i, "day").format("MMM-DD-YYYY"));
+  }
+
+  return await db.select().from(recordsTable).where(inArray(recordsTable.recordDate, dateArray));
 }
 
 // retrieve specific store ID from storesTable

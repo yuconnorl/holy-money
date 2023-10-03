@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1695115262823,
-      "tag": "0000_dizzy_pyro",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1695279271156,
-      "tag": "0001_petite_the_call",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1695279409954,
-      "tag": "0002_chilly_shiva",
+      "when": 1696324246213,
+      "tag": "0000_sharp_king_cobra",
       "breakpoints": true
     }
   ]

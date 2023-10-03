@@ -2,50 +2,28 @@ import dayjs from "dayjs";
 
 import RechartComponent from "@/components/Recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getCategory, getRecord } from "@/utils/func";
-import { reduceTotalAmount } from "@/utils/math";
+import { getMonthlyRecord } from "@/utils/func";
+import { calculateMonthData, reduceTotalAmount } from "@/utils/math";
 import { toLocalStringEn } from "@/utils/math";
 
-interface ModifiedRecord {
-  [date: string]: number;
-}
-
 export default async function ChartCard() {
-  const totalBalance = await getRecord().then((d) => reduceTotalAmount(d));
-  const chartData = await getRecord().then((d) => {
-    const result: ModifiedRecord = {};
+  const isOverlapTwoMonth = dayjs().get("date") < 6;
+  const totalBalance = await getMonthlyRecord().then(({ currentMonthData }) =>
+    reduceTotalAmount(currentMonthData)
+  );
 
-    d.sort((a, b) =>
-      new Date(a.recordDate) > new Date(b.recordDate) ? 1 : -1
-    ).forEach(({ recordDate, amount }) => {
-      const parsedAmount = parseFloat(amount);
-      result[recordDate] = result[recordDate] || 0;
-      result[recordDate] += parsedAmount;
-    });
+  const chartData = await getMonthlyRecord(isOverlapTwoMonth).then((data) => {
+    const current = calculateMonthData(data.currentMonthData);
 
-    let accumulator = 0;
-    let currentMonth: undefined | number = undefined;
+    if (!isOverlapTwoMonth) return current.slice(current.length - 7);
 
-    return Object.entries(result).map(([name, sum]) => {
-      const parsedDate = dayjs(name, { format: "MMM-DD-YYYY" });
-      const numberOfDaysInMonth = parsedDate.date();
+    const previous = calculateMonthData(data.previousMonthData);
+    const returnData = previous.concat(current);
 
-      if (currentMonth === undefined) currentMonth = parsedDate.month();
-      if (currentMonth !== parsedDate.month()) {
-        currentMonth = parsedDate.month();
-        accumulator = sum;
-      } else {
-        accumulator += sum;
-      }
-
-      return {
-        name,
-        amount: sum,
-        accu: accumulator,
-        average: Math.round(accumulator / numberOfDaysInMonth),
-      };
-    });
+    return returnData.slice(returnData.length - 7);
   });
+
+  console.log(chartData);
 
   return (
     <Card className="h-max">

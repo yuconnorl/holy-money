@@ -15,7 +15,7 @@ export default async function RecordCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Record Form</CardTitle>
+        <CardTitle>Add record</CardTitle>
         <CardDescription>Come on! Lets add one record!</CardDescription>
       </CardHeader>
       <CardContent>

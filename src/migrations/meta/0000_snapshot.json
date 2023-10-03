@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "bdfb4013-5564-484b-acda-95821d0b6654",
+  "id": "8fa37b5a-259b-4e70-bc05-2176f7995e75",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "categories": {
@@ -18,12 +18,21 @@
           "name": "category_name",
           "type": "varchar(80)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {}
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "categories_category_name_unique": {
+          "name": "categories_category_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "category_name"
+          ]
+        }
+      }
     },
     "members": {
       "name": "members",
@@ -39,12 +48,21 @@
           "name": "member_name",
           "type": "varchar(80)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {}
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "members_member_name_unique": {
+          "name": "members_member_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "member_name"
+          ]
+        }
+      }
     },
     "records": {
       "name": "records",
@@ -60,37 +78,61 @@
           "name": "amount",
           "type": "numeric(15, 4)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "store_id": {
           "name": "store_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "category_id": {
           "name": "category_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "member_id": {
           "name": "member_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "memo": {
           "name": "memo",
           "type": "varchar(80)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
+        },
+        "record_date": {
+          "name": "record_date",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "record_month": {
+          "name": "record_month",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "record_day": {
+          "name": "record_day",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "record_year": {
+          "name": "record_year",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
         },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         }
       },
@@ -136,7 +178,8 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {}
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
     },
     "stores": {
       "name": "stores",
@@ -157,7 +200,16 @@
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {}
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "stores_store_name_unique": {
+          "name": "stores_store_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "store_name"
+          ]
+        }
+      }
     }
   },
   "enums": {},

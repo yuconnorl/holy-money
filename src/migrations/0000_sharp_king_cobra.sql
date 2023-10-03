@@ -1,26 +1,33 @@
 CREATE TABLE IF NOT EXISTS "categories" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"category_name" varchar(80)
+	"category_name" varchar(80) NOT NULL,
+	CONSTRAINT "categories_category_name_unique" UNIQUE("category_name")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "members" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"member_name" varchar(80)
+	"member_name" varchar(80) NOT NULL,
+	CONSTRAINT "members_member_name_unique" UNIQUE("member_name")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "records" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"amount" numeric(15, 4),
-	"store_id" text,
-	"category_id" text,
-	"member_id" text,
-	"memo" varchar(80),
-	"created_at" timestamp DEFAULT now()
+	"amount" numeric(15, 4) NOT NULL,
+	"store_id" text NOT NULL,
+	"category_id" text NOT NULL,
+	"member_id" text NOT NULL,
+	"memo" varchar(80) NOT NULL,
+	"record_date" varchar(20) NOT NULL,
+	"record_month" varchar(20) NOT NULL,
+	"record_day" varchar(10) NOT NULL,
+	"record_year" varchar(10) NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "stores" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"store_name" varchar(80)
+	"store_name" varchar(80),
+	CONSTRAINT "stores_store_name_unique" UNIQUE("store_name")
 );
 --> statement-breakpoint
 DO $$ BEGIN

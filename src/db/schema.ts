@@ -21,7 +21,10 @@ export const recordsTable = pgTable("records", {
   storeId: text("store_id").references(() => storesTable.id).notNull(),
   categoryId: text("category_id").references(() => categoriesTable.id).notNull(),
   memberId: text("member_id").references(() => membersTable.id).notNull(),
-  memo: varchar("memo", { length: 80 }).notNull(),
+  memo: varchar("memo", { length: 80 }),
   recordDate: varchar("record_date", { length: 20 }).notNull(),
+  recordDay: varchar("record_day", { length: 10 }).notNull(),
+  recordMonth: varchar("record_month", { length: 20 }).notNull(),
+  recordYear: varchar("record_year", { length: 10 }).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });

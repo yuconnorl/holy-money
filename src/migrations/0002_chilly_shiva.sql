@@ -1,1 +1,0 @@
-ALTER TABLE "stores" DROP COLUMN IF EXISTS "store_name";
