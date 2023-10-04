@@ -19,7 +19,7 @@ export default async function NewCategoryCard() {
   return (
     <Card className="h-max">
       <CardHeader>
-        <CardTitle>Adding new category</CardTitle>
+        <CardTitle>Add category</CardTitle>
         <CardDescription>Deploy your new project in one-click.</CardDescription>
       </CardHeader>
       <CardContent>
@@ -45,9 +45,9 @@ export default async function NewCategoryCard() {
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline">Cancel</Button>
+        <Button variant="ghost">Reset</Button>
         <Button type="submit" form="category-form">
-          Deploy
+          Submit
         </Button>
       </CardFooter>
     </Card>
