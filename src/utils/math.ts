@@ -1,13 +1,5 @@
 import dayjs from "dayjs";
 
-export function reduceTotalAmount(records) {
-  return records.reduce((acc, curr) => acc + parseFloat(curr.amount), 0)
-}
-
-export function toLocalStringEn(number: string) {
-  return parseInt(number).toLocaleString();
-}
-
 interface RecordData {
   amount: string;
   recordDate: string;
@@ -20,6 +12,14 @@ interface RecordData {
   recordMonth: string;
   recordYear: string;
   createdAt: Date;
+}
+
+export function reduceTotalAmount(records: Array<RecordData>) {
+  return records.reduce((acc, curr) => acc + parseFloat(curr.amount), 0)
+}
+
+export function toLocalStringEn(number: string) {
+  return parseInt(number).toLocaleString();
 }
 
 export function calculateMonthData(data: Array<RecordData>) {

@@ -47,7 +47,7 @@ export async function joinTables() {
 
   return await db.select({
     id: recordsTable.id,
-    amount:  recordsTable.amount,
+    amount: recordsTable.amount,
     memo: recordsTable.memo,
     recordDate: recordsTable.recordDate,
     storeName: storesTable.storeName,

@@ -14,6 +14,21 @@ import {
 
 import { toLocalStringEn } from "@/utils/math";
 
+interface RechartProps {
+  data: {
+    name: string;
+    amount: number;
+    accu: number;
+    average: number;
+  }[];
+}
+
+// interface TooltipProp {
+//   active: boolean;
+//   payload: TooltipProps;
+//   label: string | undefined;
+// }
+
 const CustomizedTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
@@ -34,38 +49,32 @@ const CustomizedTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-export default function RechartComponent({ data }) {
-  const xAxisOptions = {
-    dataKey: ({ name }) => dayjs(name).format("MMM DD"),
-    padding: { left: 50, right: 50 },
-    axisLine: false,
-    tickLine: false,
-  };
-
-  const yAxisOptions = {
-    axisLine: false,
-    tickLine: false,
-    tickCount: 3,
-    tickFormatter: (label) => toLocalStringEn(label),
-  };
-
-  const lineOptions = {
-    type: "monotone",
-    dataKey: "amount",
-    stroke: "#111827",
-    strokeWidth: 2,
-    dot: { r: 4 },
-    activeDot: { r: 6 },
-  };
-
+export default function RechartComponent({ data }: RechartProps) {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart width={300} height={100} data={data}>
         <Tooltip content={<CustomizedTooltip />} />
         <CartesianGrid strokeDasharray="6 6" vertical={false} />
-        <YAxis {...yAxisOptions} />
-        <XAxis {...xAxisOptions} />
-        <Line {...lineOptions} />
+        <YAxis
+          axisLine={false}
+          tickLine={false}
+          tickCount={3}
+          tickFormatter={(label) => toLocalStringEn(label)}
+        />
+        <XAxis
+          axisLine={false}
+          tickLine={false}
+          padding={{ left: 50, right: 50 }}
+          dataKey={({ name }) => dayjs(name).format("DD")}
+        />
+        <Line
+          type="monotone"
+          dataKey="amount"
+          stroke="#111827"
+          strokeWidth={2}
+          activeDot={{ r: 6 }}
+          dot={{ r: 4 }}
+        />
         <Line
           type="monotone"
           dataKey="average"

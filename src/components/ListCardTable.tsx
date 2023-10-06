@@ -9,13 +9,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { joinTables } from "@/utils/func";
 import { toLocalStringEn } from "@/utils/math";
 
 interface Props {
   amount: string;
-  storeName: string;
-  categoryName: string;
+  storeName: string | null;
+  categoryName: string | null;
   recordDate: string;
 }
 
@@ -42,29 +43,32 @@ const ListCard = ({ amount, storeName, categoryName, recordDate }: Props) => {
 
 export default async function ListCardTable() {
   const joinedRecord = await joinTables();
+  const totalRecordNumber = joinedRecord.length ? joinedRecord.length : 0;
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Recent Sales</CardTitle>
-        <CardDescription>You made 265 sales this month.</CardDescription>
+        <CardDescription>{totalRecordNumber} records in total</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col gap-6">
-          {joinedRecord.map(
-            ({ id, amount, recordDate, storeName, categoryName }) => {
-              return (
-                <ListCard
-                  key={id}
-                  amount={amount}
-                  storeName={storeName}
-                  categoryName={categoryName}
-                  recordDate={recordDate}
-                />
-              );
-            }
-          )}
-        </div>
+        <ScrollArea className="h-72">
+          <div className="flex flex-col gap-6">
+            {joinedRecord.map(
+              ({ id, amount, recordDate, storeName, categoryName }) => {
+                return (
+                  <ListCard
+                    key={id}
+                    amount={amount}
+                    storeName={storeName}
+                    categoryName={categoryName}
+                    recordDate={recordDate}
+                  />
+                );
+              }
+            )}
+          </div>
+        </ScrollArea>
       </CardContent>
     </Card>
   );
