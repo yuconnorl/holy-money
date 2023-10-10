@@ -64,7 +64,7 @@ export default function RechartComponent({ data }: RechartProps) {
         <XAxis
           axisLine={false}
           tickLine={false}
-          padding={{ left: 50, right: 50 }}
+          padding={{ left: 20, right: 20 }}
           dataKey={({ name }) => dayjs(name).format("DD")}
         />
         <Line

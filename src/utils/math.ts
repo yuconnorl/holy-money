@@ -22,13 +22,12 @@ export function toLocalStringEn(number: string) {
   return parseInt(number).toLocaleString();
 }
 
-export function calculateMonthData(data: Array<RecordData>) {
+export function calculateMonthData(data: Array<RecordData>, isPrevious = false) {
   const sortedData = data.sort((a, b) => new Date(a.recordDate) > new Date(b.recordDate) ? 1 : -1)
   const dataMap: Map<string, number> = new Map();
 
   const currMonth = dayjs(sortedData[0]?.recordDate).get('month')
-  const lastDay = dayjs(sortedData.at(-1)?.recordDate).get('date')
-
+  const lastDay = isPrevious ? dayjs(sortedData.at(-1)?.recordDate).get('date') : dayjs().get('date')
 
   for (let i = 1; i <= lastDay; i++) {
     let date = dayjs().month(currMonth).date(i).format("MMM-DD-YYYY")

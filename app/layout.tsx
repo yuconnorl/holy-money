@@ -4,8 +4,9 @@ import clsx from "clsx";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import { Header } from "@/components/Header";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -19,10 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={clsx(inter.className, "w-full h-full")}>
-      <body className="w-full h-full antialiased relative">
-        <div className="main flex w-full h-full flex-col justify-between">
-          {children}
+    <html lang="en" className={clsx(inter.className, "w-full")}>
+      <body className="w-full antialiased relative">
+        <div className="flex w-full flex-col justify-between">
+          <ThemeProvider attribute="class" defaultTheme="system">
+            <Header />
+            {children}
+          </ThemeProvider>
           <Toaster />
         </div>
       </body>

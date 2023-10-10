@@ -3,11 +3,11 @@ import { joinTables } from "@/utils/func";
 
 import DataTable from "./ui/data-table";
 
-export default async function Table() {
+export default async function RecordTable() {
   const joinedRecord = await joinTables();
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="">
       <DataTable columns={Column} data={joinedRecord} />
     </div>
   );

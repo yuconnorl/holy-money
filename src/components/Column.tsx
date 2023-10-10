@@ -57,10 +57,6 @@ const columns: ColumnDef<Record>[] = [
     },
   },
   {
-    accessorKey: "memberName",
-    header: "Member",
-  },
-  {
     accessorKey: "memo",
     header: "Memo",
   },

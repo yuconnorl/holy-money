@@ -17,7 +17,7 @@ export default async function ChartCard() {
 
     if (!isOverlapTwoMonth) return current.slice(current.length - 7);
 
-    const previous = calculateMonthData(data.previousMonthData!);
+    const previous = calculateMonthData(data.previousMonthData!, true);
     const returnData = previous.concat(current);
 
     return returnData.slice(returnData.length - 7);
