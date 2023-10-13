@@ -61,6 +61,10 @@
     @apply bg-background text-foreground;
   }
 
+  html, body {
+    @apply w-full h-full;
+  }
+
   .container {
     @apply max-w-[1500px]
   }

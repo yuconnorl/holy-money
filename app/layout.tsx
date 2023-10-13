@@ -1,4 +1,5 @@
 import "./globals.css";
+import "react-mosaic-component/react-mosaic-component.css";
 
 import clsx from "clsx";
 import type { Metadata } from "next";
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={clsx(inter.className, "w-full")}>
       <body className="w-full antialiased relative">
-        <div className="flex w-full flex-col justify-between">
+        <div className="flex w-full h-full flex-col justify-between">
           <ThemeProvider attribute="class" defaultTheme="system">
             <Header />
             {children}

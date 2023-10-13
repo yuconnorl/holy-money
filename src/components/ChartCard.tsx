@@ -1,11 +1,12 @@
 import dayjs from "dayjs";
+import { memo } from "react";
 
 import RechartComponent from "@/components/Recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getMonthlyRecord } from "@/utils/func";
 import { calculateMonthData, reduceTotalAmount } from "@/utils/math";
 
-export default async function ChartCard() {
+async function ChartCard() {
   const isOverlapTwoMonth = dayjs().get("date") < 7;
   const currentMonth = dayjs().format("MMMM");
   const totalBalance = await getMonthlyRecord().then(({ currentMonthData }) =>
@@ -54,3 +55,5 @@ export default async function ChartCard() {
     </Card>
   );
 }
+
+export default memo(ChartCard);
